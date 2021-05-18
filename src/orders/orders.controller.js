@@ -15,7 +15,6 @@ function orderExistsInRequestBody(req, res, next) {
   const { data: request = {} } = req.body;
   const requiredProperties = ['deliverTo', 'mobileNumber', 'dishes'];
   const oIndex = res.locals.orderIndex;
-  // prob wanna split this up
   let messages = [];
   Object.keys(request).filter((field) => {
     if (requiredProperties.includes(field)) {
@@ -89,8 +88,8 @@ function create(req, res) {
   res.status(201).json({ data: res.locals.newOrder });
 }
 function destroy(req, res, next) {
-  if(orders[res.locals.orderIndex].status !== 'pending'){
-    return next({status:400, message: 'An order cannot be deleted unless it is pending'});
+  if (orders[res.locals.orderIndex].status !== 'pending') {
+    return next({ status: 400, message: 'An order cannot be deleted unless it is pending' });
   }
   orders.splice(orders[res.locals.orderIndex], 1);
   res.sendStatus(204);
